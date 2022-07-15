@@ -4,20 +4,29 @@ import { useState, useEffect } from "react";
 function AppWelcome() {
   return (
     <div>
-      <h1>Movie Logging Web App</h1>
+      <h1>Movie Logger Web App</h1>
     </div>
+  );
+}
+
+function MovieRow({ movie }) {
+  return (
+    <tr>
+      <td>{movie.title}</td>
+      <td>{movie.rating}</td>
+    </tr>
   );
 }
 
 function MoviesTable() {
   const [movies, setMovies] = useState([]);
-
+  const rows = [];
   // fetch the movies from the backend endpoint
   const loadMovies = async () => {
     const response = await fetch("/movies/1234");
     const data = await response.json();
-    setMovies(data)
-    console.log(movies)
+    setMovies(data);
+    console.log(data);
   };
 
   // call useEffect hook when the component is generated
@@ -25,10 +34,25 @@ function MoviesTable() {
     loadMovies();
   }, []);
 
+  // map the movies to a td by their name
+  movies.forEach((movie) => {
+    rows.push(<MovieRow key={movie._id} movie={movie} />);
+  });
+
   return (
     <>
-      <h2>Movies</h2>
-      
+      <h2>Your Movies Watched</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+      <th></th>
     </>
   );
 }
