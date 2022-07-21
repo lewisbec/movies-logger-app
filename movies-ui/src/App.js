@@ -38,9 +38,10 @@ function MoviesTable() {
   // delete movies
   const onDelete = async (_id) => {
     const res = await fetch(`/movies/${_id}`, { method: "DELETE" });
+    const movieDeleted = movies.filter((m) => m._id === _id);
     const refreshedMovies = movies.filter((m) => m._id !== _id);
     setMovies(refreshedMovies);
-    alert("test delete button");
+    alert(`Deleted Movie: ${movieDeleted[0].title}`);
   };
 
   // call useEffect hook when the component is generated

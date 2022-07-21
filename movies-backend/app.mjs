@@ -28,12 +28,6 @@ db.once("open", () => {
   console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
-// test endpoint for sending in
-app.get("/movies", (req, res) => {
-  console.log("movies getting");
-  res.json({ test: "message" });
-});
-
 // add a newly watchedMovie
 app.post("/movies", (req, res) => {
   // check for input params
