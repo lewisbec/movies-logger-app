@@ -20,4 +20,11 @@ const getWatchedMovies = async (userid) => {
     return allMovies
 }
 
-export { createMovieRating, getWatchedMovies };
+const deleteByID = async (movieid) => {
+    const res = await MovieWatched.deleteOne({_id: movieid})
+    
+    return res.deletedCount
+}
+
+
+export { createMovieRating, getWatchedMovies, deleteByID };

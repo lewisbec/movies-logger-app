@@ -68,15 +68,15 @@ function CreateMovieForm() {
 
   const createMovie = async () => {
     console.log("createmovie test");
-    
+
     const newMovie = {
       title,
       rating,
       notes,
-      user_id: '1234',
-      poster: 'placeholder'
+      user_id: "1234",
+      poster: "placeholder",
     };
-    console.log(newMovie)
+    console.log(newMovie);
     const response = await fetch("/movies", {
       method: "POST",
       body: JSON.stringify(newMovie),
@@ -130,8 +130,8 @@ export default function App() {
   return (
     <div>
       <AppWelcome />
-      <CreateMovieForm />
       <MoviesTable />
+      <CreateMovieForm />
     </div>
   );
 }

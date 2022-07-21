@@ -62,6 +62,23 @@ app.get("/movies/:user_id", (req, res) => {
     });
 });
 
+// delete movie by ID
+app.delete("/movies/:id", (req, res) => {
+  MovieRatingController.deleteByID(req.params.id)
+    .then((deletedCount) => {
+      if (deletedCount === 1) {
+        res.status(204).json({ deletedCount });
+      } else {
+        res.status(404).json({ Error: "Resource not found" });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send({ error: "Request failed" });
+    });
+});
+
+// search for a movie
 app.get("/search-for-movie", (req, res) => {
   const matchingMovies = findMovie(req.params.movie - title);
   return matchingMovies;
