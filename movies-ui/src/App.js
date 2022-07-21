@@ -10,13 +10,16 @@ function AppWelcome() {
   );
 }
 
-function MovieRow({ movie }) {
+function MovieRow({ movie, onDelete }) {
   return (
     <>
       <tr>
         <td>{movie.title}</td>
         <td>{movie.rating}</td>
         <td>{movie.notes}</td>
+        <td>
+          <button onClick={() => onDelete(movie._id)}>Delete</button>
+        </td>
       </tr>
     </>
   );
@@ -30,7 +33,14 @@ function MoviesTable() {
     const response = await fetch("/movies/1234");
     const data = await response.json();
     setMovies(data);
-    console.log(data);
+  };
+
+  // delete movies
+  const onDelete = async (_id) => {
+    const res = await fetch(`/movies/${_id}`, { method: "DELETE" });
+    const refreshedMovies = movies.filter((m) => m._id !== _id);
+    setMovies(refreshedMovies);
+    alert("test delete button");
   };
 
   // call useEffect hook when the component is generated
@@ -40,7 +50,7 @@ function MoviesTable() {
 
   // map the movies to a td by their name
   movies.forEach((movie) => {
-    rows.push(<MovieRow key={movie._id} movie={movie} />);
+    rows.push(<MovieRow key={movie._id} movie={movie} onDelete={onDelete} />);
   });
 
   return (
@@ -53,6 +63,7 @@ function MoviesTable() {
             <th>Title</th>
             <th>Rating</th>
             <th>Notes</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -67,8 +78,6 @@ function CreateMovieForm() {
   const [notes, setNotes] = useState("");
 
   const createMovie = async () => {
-    console.log("createmovie test");
-
     const newMovie = {
       title,
       rating,
@@ -76,7 +85,6 @@ function CreateMovieForm() {
       user_id: "1234",
       poster: "placeholder",
     };
-    console.log(newMovie);
     const response = await fetch("/movies", {
       method: "POST",
       body: JSON.stringify(newMovie),

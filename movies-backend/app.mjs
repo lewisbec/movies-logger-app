@@ -30,6 +30,7 @@ db.once("open", () => {
 
 // test endpoint for sending in
 app.get("/movies", (req, res) => {
+  console.log("movies getting");
   res.json({ test: "message" });
 });
 
