@@ -74,9 +74,17 @@ app.delete("/movies/:id", (req, res) => {
 });
 
 // search for a movie
-app.get("/search-for-movie", (req, res) => {
-  const matchingMovies = findMovie(req.params.movie - title);
-  return matchingMovies;
+app.get("/search/:movietitle", (req, res) => {
+  const search_call = `https://api.themoviedb.org/3/search/movie?api_key=a7ef20454443b2f70d29336687a3d60a&language=en-US&query=${req.params.movietitle}&page=1&include_adult=false`;
+
+  fetch(search_call)
+    .then((response) => response.json())
+    .then((data) => {
+      res.send(data["results"]);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 });
 
 app.listen(PORT, () => {
