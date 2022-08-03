@@ -3,18 +3,21 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom"
 
 export function CreateMovieForm({ movieToAdd }) {
-    const [title, setTitle] = useState("");
     const [rating, setRating] = useState("");
     const [notes, setNotes] = useState("");
+    const [date, setDate] = useState("");
     const history = useHistory()
+    const moviePosterURL = `https://image.tmdb.org/t/p/original/${movieToAdd.poster_path}`;
+
 
     const createMovie = async () => {
         const newMovie = {
-            title,
+            title: movieToAdd.title,
             rating,
             notes,
             user_id: "1234",
-            poster: movieToAdd.poster_path
+            poster: movieToAdd.poster_path,
+            date
         }
         const response = await fetch("/movies", {
             method: "POST",
@@ -25,7 +28,7 @@ export function CreateMovieForm({ movieToAdd }) {
         });
 
         if (response !== null) {
-            alert("Movie added");
+            alert(`Added ${movieToAdd.title} to movies watched`);
         } else {
             alert("issue adding exercise");
         }
@@ -35,13 +38,18 @@ export function CreateMovieForm({ movieToAdd }) {
     // input form for movie addition
     return (
         <div>
-            
-            <form>
-                <legend>Adding <strong>{movieToAdd.title}</strong> to your watchlist</legend>
-                <input
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
+            <h2>Adding <strong><em>{movieToAdd.title}</em></strong> to your watchlist</h2>
+
+            <td>
+                <img
+                    src={moviePosterURL}
+                    width={200}
+                    height={300}
+                    alt="not available"
                 />
+            </td>
+            <form>
+                <label>Rating :</label>
                 <select onChange={(e) => setRating(e.target.value)} value={rating}>
                     <option>0</option>
                     <option>1</option>
@@ -55,11 +63,15 @@ export function CreateMovieForm({ movieToAdd }) {
                     <option>9</option>
                     <option>10</option>
                 </select>
+                <label>   Notes: </label>
                 <textarea
-                    placeholder="notes"
                     onChange={(e) => setNotes(e.target.value)}
                     value={notes}
                 ></textarea>
+                <label>Date Watched: </label>
+                <input type="date" onChange={(e) => {
+                    setDate(e.target.value)
+                }} value={date}></input>
                 <button type="button" onClick={createMovie}>Add Movie Watched</button>
             </form>
         </div>

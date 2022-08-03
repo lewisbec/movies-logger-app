@@ -4,8 +4,8 @@ const MovieWatchedSchema = new mongoose.Schema({
     title: String,
     rating: Number,
     date_watched: {
-        type: Date,
-        default: () => Date.now()
+        type: String,
+        default: () => string(Date.now())
     },
     poster: String,
     notes: {

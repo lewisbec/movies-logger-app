@@ -4,12 +4,22 @@ import { useEffect } from "react";
 
 
 function MovieRow({ movie, onDelete }) {
+  const moviePosterURL = `https://image.tmdb.org/t/p/original/${movie.poster}`;
   return (
     <>
       <tr>
+        <td>
+          <img
+            src={moviePosterURL}
+            width={200}
+            height={300}
+            alt="not available"
+          />
+        </td>
         <td>{movie.title}</td>
         <td>{movie.rating}</td>
         <td>{movie.notes}</td>
+        <td>{movie.date_watched}</td>
         <td>
           <button onClick={() => onDelete(movie._id)}>Delete</button>
         </td>
@@ -54,10 +64,11 @@ function MoviesTable() {
       <table>
         <thead>
           <tr>
+            <th>Poster</th>
             <th>Title</th>
             <th>Rating</th>
             <th>Notes</th>
-            <th>Delete</th>
+            <th>Date Watched</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

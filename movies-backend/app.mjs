@@ -36,7 +36,8 @@ app.post("/movies", (req, res) => {
     req.body.rating,
     req.body.poster,
     req.body.notes,
-    req.body.user_id
+    req.body.user_id,
+    req.body.date
   )
     .then((movie) => {
       res.send(movie);
