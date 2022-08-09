@@ -60,7 +60,6 @@ function MoviesTable() {
   return (
     <>
       <h3>Your Movies Watched</h3>
-
       <table>
         <thead>
           <tr>

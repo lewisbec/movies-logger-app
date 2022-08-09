@@ -18,7 +18,7 @@ const createMovieRating = async (title, rating, poster, notes, userid, date) => 
 };
 
 const getWatchedMovies = async (userid) => {
-  const allMovies = MovieWatched.find({ user_id: userid }).sort({ date_watched: 0 });
+  const allMovies = MovieWatched.find({ user_id: userid }).sort({ date_watched: 1 });
   return allMovies;
 };
 
